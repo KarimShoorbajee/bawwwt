@@ -15,32 +15,42 @@ var T = new Twit({
 var url = 'https://www.reddit.com/r/aww.json';
 var picUrl;
 var parsedJSON;
+var prevURLs = ['a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a'];
 
 tweetIt();
-setInterval(tweetIt, 1000*60*60*3);
+setInterval(tweetIt, 1000*60*60*5);
 function tweetIt()
 {
   request(url, function (error, response, body)
   {
     parsedJSON = JSON.parse(body);
 
-    var picFound = false
+    var picFound = false;
     var i = 2;
     while (!picFound)
     {
-      var itterUrl = parsedJSON.data.children[i].data.url
-      var len = itterUrl.length;
-      var sstring = itterUrl.substring(len - 3, len);
+      var picUrl = parsedJSON.data.children[i].data.url
+      var len = picUrl.length;
+      var sstring = picUrl.substring(len - 3, len);
       console.log(sstring);
-      if (sstring === 'jpg')
-      {
+      var recentlyPosted = false;
+      for (var j = 0; j < prevURLs.length; j++)
+        if (prevURLs[j] === picUrl)
+        {
+          recentlyPosted = true;
+          break;
+        }
+      if (sstring === 'jpg' && !recentlyPosted)
         picFound = true;
-      }
-      i++;
+      else
+        i++;
     }
-    console.log(i-1);
-    picUrl = parsedJSON.data.children[i-1].data.url;
-    var uid = parsedJSON.data.children[i-1].data.author;
+    prevURLs.pop();
+    prevURLs.unshift(picUrl);
+    console.log(prevURLs);
+    console.log(i);
+//    picUrl = parsedJSON.data.children[i].data.url;
+    var uid = parsedJSON.data.children[i].data.author;
     console.log(picUrl);
     var cmd = 'java DownloadImage ' + picUrl;
     exec(cmd, processing);
