@@ -5,10 +5,10 @@ var Twit = require('twit');
 var fs = require('fs');
 var exec = require('child_process').exec;
 var T = new Twit({
-  consumer_key:         'o2oNMNOMxrSEl2G6vssDIBvKY',
-  consumer_secret:      'C88cwSKh9pBlU3XMrawauH6oCa1Jjy0UVxaFrA09ZEoGTcUehK',
-  access_token:         '929418220620173313-4XW58UTD2a4fdNm89Xqg1pm0d0YDME0',
-  access_token_secret:  'ZtiALdKjya5btd8WZlFvYfsNGTjYaY2t3rpYgV9hzfzTZ',
+  consumer_key:         '',
+  consumer_secret:      '',
+  access_token:         '',
+  access_token_secret:  '',
   timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
 })
 
